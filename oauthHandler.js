@@ -19,7 +19,7 @@ const db = getFirestore(app); // Firestore initialization
 
 const CLIENT_ID = '1296486738444812318'; // Your Discord Client ID
 const REDIRECT_URI = 'https://zvxnz7.github.io/discord_oauth/callback.html'; // Updated redirect URL
-const secretDoc = await admin.firestore().collection('secrets').doc('CLIENT_SECRET').get();
+const secretDoc = await admin.firestore().collection('SECRETS').doc('CLIENT_SECRET').get();
 const CLIENT_SECRET = secretDoc.data().value;
 // Extract authorization code from URL
 const urlParams = new URLSearchParams(window.location.search);
