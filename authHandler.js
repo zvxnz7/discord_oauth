@@ -1,6 +1,5 @@
-// Firebase Configuration
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-firestore.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -89,7 +88,7 @@ if (code) {
 
 // Function to fetch CLIENT_SECRET from Firestore
 async function fetchClientSecret() {
-    const docRef = doc(db, "secrets", CLIENT_SECRET);  // Reference to your secrets collection and document
+    const docRef = doc(db, "secrets", "CLIENT_SECRET");  // Corrected path to the document
     try {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
