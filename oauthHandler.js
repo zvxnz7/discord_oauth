@@ -40,6 +40,9 @@ async function fetchClientSecret() {
 
 fetchClientSecret();
 
+const urlParams = new URLSearchParams(window.location.search);
+const code = urlParams.get('code');
+
 if (code) {
     // Exchange the authorization code for an access token
     fetch('https://discord.com/api/oauth2/token', {
