@@ -16,7 +16,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app); // Firestore initialization
-const analytics = getAnalytics(app); // Optional analytics
 
 const CLIENT_ID = '1296486738444812318'; // Your Discord Client ID
 const CLIENT_SECRET = 'v2fEWyLbAUzWpu9ElxA5rclRL4hENDSo'; // Securely store this on the server side
