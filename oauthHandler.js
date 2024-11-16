@@ -16,6 +16,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app); // Firestore initialization
+const admin = require('firebase-admin');
 
 const CLIENT_ID = '1296486738444812318'; // Your Discord Client ID
 const REDIRECT_URI = 'https://zvxnz7.github.io/discord_oauth/callback.html'; // Updated redirect URL
