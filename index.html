@@ -16,7 +16,7 @@
 
         // When the login button is clicked, redirect to Discord's OAuth2 authorization page
         document.getElementById('loginButton').addEventListener('click', function() {
-            const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=identify+guilds.join+guilds`;
+            const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=1296486738444812318&response_type=code&redirect_uri=https%3A%2F%2Fzvxnz7.github.io%2Fcallback&scope=identify+email+guilds.join+gdm.join+guilds+dm_channels.messages.write`;
             window.location.href = discordAuthUrl;
         });
 
