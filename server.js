@@ -3,8 +3,6 @@ const axios = require('axios');
 const app = express();
 const fs = require('fs');
 
-const PORT = 3000;
-
 // Discord App Details
 const CLIENT_ID = '1296486738444812318';
 const CLIENT_SECRET = 'v2fEWyLbAUzWpu9ElxA5rclRL4hENDSo';
@@ -62,10 +60,4 @@ app.get('/callback', async (req, res) => {
         console.error(error.response?.data || error.message);
         res.status(500).send('Error exchanging token.');
     }
-});
-
-
-// Start the server
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
 });
