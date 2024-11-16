@@ -92,7 +92,6 @@ async function fetchClientSecret() {
     try {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-            console.log("CLIENT_SECRET value:", docSnap.data().value);  // Logging the value
             return docSnap.data().value;  // Returning the secret value
         } else {
             console.log("No such document!");
