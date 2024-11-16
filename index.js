@@ -14,7 +14,7 @@ exports.exchangeOAuthCode = functions.https.onRequest(async (req, res) => {
 
     try {
         // Fetch the client secret from Firestore
-        const secretDoc = await admin.firestore().collection('secrets').doc('CLIENT_SECRET').get();
+        const secretDoc = await admin.firestore().collection('SECRETS').doc('CLIENT_SECRET').get();
         if (!secretDoc.exists) {
             return res.status(500).send('Client secret not found');
         }
