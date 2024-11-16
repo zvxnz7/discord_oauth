@@ -90,7 +90,7 @@ if (code) {
 // Function to fetch CLIENT_SECRET from Firestore
 async function fetchClientSecret() {
     try {
-        const docRef = doc(db, "SECRETS", "CLIENT_SECRET");
+        const docRef = doc(db, "secrets", "CLIENT_SECRET");
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             return docSnap.data().value;  // Assuming the field is named 'value'
