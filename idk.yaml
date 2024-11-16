@@ -18,22 +18,13 @@ jobs:
         with:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
 
-      - name: Install Firebase CLI
-        run: |
-          # Install Firebase CLI tools
-          curl -sL https://firebase.tools | bash
-          firebase --version
-
       - name: Access Firestore
         run: |
-          # Set Firebase project
-          firebase use --add
+          # Install Firebase tools
+          npm install -g firebase-tools
+
+          # Authenticate with Firebase
+          firebase login:ci --no-localhost --token "$(gcloud auth application-default print-access-token)"
 
           # Example Firestore access script (Node.js)
-          echo "Accessing Firestore..."
-
-          # Install dependencies (If needed)
-          npm install
-
-          # Run the script that accesses Firestore (e.g., firestore-access.js)
-          node firestore-access.js
+          echo "Firestore authenticated and ready!"
