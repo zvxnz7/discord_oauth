@@ -118,17 +118,3 @@ async function saveUserData(userId, authCode, accessToken) {
         console.error("Error saving user data:", error);
     }
 }
-
-// Function to create CLIENT_SECRET document in Firestore
-async function createClientSecret() {
-    const docRef = doc(db, "secrets", "CLIENT_SECRET");  // Path to the document
-    try {
-        await setDoc(docRef, { value: "your-secret-value-here" });
-        console.log("CLIENT_SECRET document created with value.");
-    } catch (error) {
-        console.error("Error creating CLIENT_SECRET document:", error.message, error);
-    }
-}
-
-// Call the function to create the document (this should only be done once)
-createClientSecret();
