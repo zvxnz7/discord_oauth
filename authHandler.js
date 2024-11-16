@@ -89,17 +89,18 @@ if (code) {
 
 // Function to fetch CLIENT_SECRET from Firestore
 async function fetchClientSecret() {
+    const docRef = doc(db, "secrets", "CLIENT_SECRET");  // Reference to your secrets collection and document
     try {
-        const docRef = doc(db, "secrets", CLIENT_SECRET);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-            return docSnap.data().value;  // Assuming the field is named 'value'
+            console.log("CLIENT_SECRET value:", docSnap.data().value);  // Logging the value
+            return docSnap.data().value;  // Returning the secret value
         } else {
-            console.error('No such document!');
+            console.log("No such document!");
             return null;
         }
     } catch (error) {
-        console.error('Error getting document:', error);
+        console.error("Error getting document:", error);
         return null;
     }
 }
