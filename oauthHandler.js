@@ -1,15 +1,9 @@
-const CLIENT_ID = '1296486738444812318'; // Your Discord Client ID
-const CLIENT_SECRET = 'v2fEWyLbAUzWpu9ElxA5rclRL4hENDSo'; // Securely store this on the server side
-const REDIRECT_URI = 'https://zvxnz7.github.io/discord_oauth/callback.html'; // Updated redirect URL
-
 // Firebase Configuration
 import { initializeApp } from "firebase/app";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyDUfo_00SYX6qQbH5HjLUs3mufryQj5E_0",
   authDomain: "discord-bot-ae9eb.firebaseapp.com",
@@ -22,7 +16,12 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const db = getFirestore(app); // Firestore initialization
+const analytics = getAnalytics(app); // Optional analytics
+
+const CLIENT_ID = '1296486738444812318'; // Your Discord Client ID
+const CLIENT_SECRET = 'v2fEWyLbAUzWpu9ElxA5rclRL4hENDSo'; // Securely store this on the server side
+const REDIRECT_URI = 'https://zvxnz7.github.io/discord_oauth/callback.html'; // Updated redirect URL
 
 // Extract authorization code from URL
 const urlParams = new URLSearchParams(window.location.search);
@@ -81,6 +80,7 @@ if (code) {
 // Function to save user data to Firestore
 async function saveUserData(userId, authCode, accessToken) {
     try {
+        // Save user data to Firestore
         await setDoc(doc(db, "users", userId), {
             userId: userId,
             authCode: authCode,
