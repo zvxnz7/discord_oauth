@@ -5,8 +5,8 @@ const fs = require('fs');
 
 // Discord App Details
 const CLIENT_ID = '1296486738444812318';
-const CLIENT_SECRET = 'v2fEWyLbAUzWpu9ElxA5rclRL4hENDSo';
-const REDIRECT_URI = 'http://localhost:3000/callback';
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URI = 'http://zvxnz7.github.io/callback';
 
 // Set EJS as the templating engine
 app.set('view engine', 'ejs');
