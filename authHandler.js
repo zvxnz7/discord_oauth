@@ -3,13 +3,13 @@ import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/fireb
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCbSyocu6e8t7UTLJ4VBwULgBxt38ggw1k",
-  authDomain: "casino777-7.firebaseapp.com",
-  projectId: "casino777-7",
-  storageBucket: "casino777-7.appspot.com",
-  messagingSenderId: "824259346500",
-  appId: "1:824259346500:web:1ace23689863864cc23c11",
-  measurementId: "G-LHMDCMRY9E"
+  apiKey: "AIzaSyDUfo_00SYX6qQbH5HjLUs3mufryQj5E_0",
+  authDomain: "discord-bot-ae9eb.firebaseapp.com",
+  projectId: "discord-bot-ae9eb",
+  storageBucket: "discord-bot-ae9eb.firebasestorage.app",
+  messagingSenderId: "389791081623",
+  appId: "1:389791081623:web:7bfdf8e3ce18a79cb6f5d2",
+  measurementId: "G-MDM9DYM30B"
 };
 
 // Initialize Firebase
