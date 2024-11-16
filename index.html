@@ -8,8 +8,64 @@
 <body>
     <h1>Discord OAuth2 Login</h1>
     <p>Click the button below to log in with Discord:</p>
-    <a href="<%= discordAuthUrl %>">
-        <button>Login with Discord</button>
-    </a>
+    <button id="loginButton">Login with Discord</button>
+
+    <script>
+        const CLIENT_ID = '1296486738444812318';
+        const REDIRECT_URI = 'https://zvxnz7.github.io/callback'; // Your GitHub Pages callback URL
+
+        // When the login button is clicked, redirect to Discord's OAuth2 authorization page
+        document.getElementById('loginButton').addEventListener('click', function() {
+            const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=identify+guilds.join+guilds`;
+            window.location.href = discordAuthUrl;
+        });
+
+        // Check for the callback (authorization code) when landing on the callback URL
+        if (window.location.pathname === '/callback') {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code'); // Get the code from the URL query params
+
+            if (code) {
+                // Exchange the authorization code for an access token
+                fetch('https://discord.com/api/oauth2/token', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        client_id: CLIENT_ID,
+                        client_secret: 'YOUR_CLIENT_SECRET', // You must secure the client secret somewhere
+                        grant_type: 'authorization_code',
+                        code: code,
+                        redirect_uri: REDIRECT_URI,
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const accessToken = data.access_token;
+                    
+                    // Fetch user data from Discord API
+                    fetch('https://discord.com/api/users/@me', {
+                        headers: { Authorization: `Bearer ${accessToken}` }
+                    })
+                    .then(res => res.json())
+                    .then(userData => {
+                        document.body.innerHTML = `
+                            <h1>Welcome, ${userData.username}!</h1>
+                            <p>Your Access Token: ${accessToken}</p>
+                        `;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching user data:', error);
+                        document.body.innerHTML = '<h1>Failed to fetch user data</h1>';
+                    });
+                })
+                .catch(error => {
+                    console.error('Error exchanging token:', error);
+                    document.body.innerHTML = '<h1>OAuth2 Token Exchange Failed</h1>';
+                });
+            } else {
+                document.body.innerHTML = '<h1>No authorization code received!</h1>';
+            }
+        }
+    </script>
 </body>
 </html>
