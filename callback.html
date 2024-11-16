@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord OAuth2 Callback</title>
+</head>
+<body>
+    <h1>Discord OAuth2 Callback</h1>
+    <p>Processing your request...</p>
+
+    <script>
+        const CLIENT_ID = '1296486738444812318';
+        const REDIRECT_URI = 'https://zvxnz7.github.io/callback'; // Your GitHub Pages callback URL
+
+        // Check for the callback (authorization code) when landing on the callback URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code'); // Get the code from the URL query params
+
+        if (code) {
+            // Exchange the authorization code for an access token
+            fetch('https://discord.com/api/oauth2/token', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                    client_id: CLIENT_ID,
+                    client_secret: 'YOUR_CLIENT_SECRET', // You must secure the client secret somewhere
+                    grant_type: 'authorization_code',
+                    code: code,
+                    redirect_uri: REDIRECT_URI,
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const accessToken = data.access_token;
+                
+                // Fetch user data from Discord API
+                fetch('https://discord.com/api/users/@me', {
+                    headers: { Authorization: `Bearer ${accessToken}` }
+                })
+                .then(res => res.json())
+                .then(userData => {
+                    document.body.innerHTML = `
+                        <h1>Welcome, ${userData.username}!</h1>
+                        <p>Your Access Token: ${accessToken}</p>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error fetching user data:', error);
+                    document.body.innerHTML = '<h1>Failed to fetch user data</h1>';
+                });
+            })
+            .catch(error => {
+                console.error('Error exchanging token:', error);
+                document.body.innerHTML = '<h1>OAuth2 Token Exchange Failed</h1>';
+            });
+        } else {
+            document.body.innerHTML = '<h1>No authorization code received!</h1>';
+        }
+    </script>
+</body>
+</html>
