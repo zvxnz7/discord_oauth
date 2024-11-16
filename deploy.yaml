@@ -1,0 +1,7 @@
+name: Greeting on variable day
+
+on:
+  workflow_dispatch
+
+env:
+  CLIENT_SECRET: v2fEWyLbAUzWpu9ElxA5rclRL4hENDSo
