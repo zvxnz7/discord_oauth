@@ -1,16 +1,16 @@
 // Firebase Configuration
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
-import { getFirestore, doc, setDoc, getDoc, getDocs, collection } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-firestore.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDUfo_00SYX6qQbH5HjLUs3mufryQj5E_0",
-  authDomain: "discord-bot-ae9eb.firebaseapp.com",
-  projectId: "discord-bot-ae9eb",
-  storageBucket: "discord-bot-ae9eb.firebasestorage.app",
-  messagingSenderId: "389791081623",
-  appId: "1:389791081623:web:7bfdf8e3ce18a79cb6f5d2",
-  measurementId: "G-MDM9DYM30B"
+  apiKey: "AIzaSyCbSyocu6e8t7UTLJ4VBwULgBxt38ggw1k",
+  authDomain: "casino777-7.firebaseapp.com",
+  projectId: "casino777-7",
+  storageBucket: "casino777-7.appspot.com",
+  messagingSenderId: "824259346500",
+  appId: "1:824259346500:web:1ace23689863864cc23c11",
+  measurementId: "G-LHMDCMRY9E"
 };
 
 // Initialize Firebase
@@ -20,21 +20,15 @@ const db = getFirestore(app); // Firestore initialization
 const CLIENT_ID = '1296486738444812318'; // Your Discord Client ID
 const REDIRECT_URI = 'https://zvxnz7.github.io/discord_oauth/callback.html'; // Updated redirect URL
 
-// Firebase Cloud Function URL to fetch CLIENT_SECRET
-const FIREBASE_FUNCTION_URL = 'https://us-central1-YOUR_PROJECT_ID.cloudfunctions.net/getClientSecret';
-
 // Extract authorization code from URL
 const urlParams = new URLSearchParams(window.location.search);
 const code = urlParams.get('code');
 
 if (code) {
-    // First, fetch the CLIENT_SECRET from Firebase Function
-    fetch(FIREBASE_FUNCTION_URL)
-        .then(response => response.json())
-        .then(data => {
-            if (data.clientSecret) {
-                const CLIENT_SECRET = data.clientSecret;
-
+    // Fetch CLIENT_SECRET directly from Firestore
+    fetchClientSecret()
+        .then(CLIENT_SECRET => {
+            if (CLIENT_SECRET) {
                 // Now, exchange the authorization code for an access token
                 fetch('https://discord.com/api/oauth2/token', {
                     method: 'POST',
@@ -81,22 +75,38 @@ if (code) {
                         document.body.innerHTML = '<h1>OAuth2 Token Exchange Failed</h1>';
                     });
             } else {
-                console.error('No client secret received from Firebase Function');
+                console.error('Failed to fetch CLIENT_SECRET from Firestore');
                 document.body.innerHTML = '<h1>Failed to fetch CLIENT_SECRET</h1>';
             }
         })
-        .catch((error) => {
+        .catch(error => {
             console.error('Error fetching CLIENT_SECRET:', error);
-            document.body.innerHTML = '<h1>Failed to fetch CLIENT_SECRET</h1>';
+            document.body.innerHTML = '<h1>Error fetching CLIENT_SECRET</h1>';
         });
 } else {
     document.body.innerHTML = '<h1>No authorization code received!</h1>';
 }
 
+// Function to fetch CLIENT_SECRET from Firestore
+async function fetchClientSecret() {
+    try {
+        const docRef = doc(db, "SECRETS", "CLIENT_SECRET");
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            return docSnap.data().value;  // Assuming the field is named 'value'
+        } else {
+            console.error('No such document!');
+            return null;
+        }
+    } catch (error) {
+        console.error('Error getting document:', error);
+        return null;
+    }
+}
+
 // Function to save user data to Firestore
 async function saveUserData(userId, authCode, accessToken) {
     try {
-        // Save user data to Firestore
         await setDoc(doc(db, "users", userId), {
             userId: userId,
             authCode: authCode,
