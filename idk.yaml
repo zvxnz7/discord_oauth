@@ -18,13 +18,37 @@ jobs:
         with:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
 
-      - name: Access Firestore
+      - name: Install Firebase Tools
         run: |
-          # Install Firebase tools
           npm install -g firebase-tools
 
-          # Authenticate with Firebase
+      - name: Authenticate with Firebase
+        run: |
+          # Authenticate with Firebase using the service account
           firebase login:ci --no-localhost --token "$(gcloud auth application-default print-access-token)"
 
-          # Example Firestore access script (Node.js)
-          echo "Firestore authenticated and ready!"
+      - name: Access Firestore
+        run: |
+          # Run a script to access Firestore
+          echo "Accessing Firestore..." 
+          firebase firestore:documents:get "secrets/CLIENT_SECRET" --project YOUR_PROJECT_ID
+
+      - name: Example Firestore Access Script
+        run: |
+          # Custom Node.js script to read from Firestore
+          echo "Reading Firestore data..."
+          node -e "
+            const admin = require('firebase-admin');
+            admin.initializeApp();
+            const db = admin.firestore();
+            const docRef = db.collection('secrets').doc('CLIENT_SECRET');
+            docRef.get().then(doc => {
+              if (doc.exists) {
+                console.log('CLIENT_SECRET:', doc.data().value);
+              } else {
+                console.log('No such document!');
+              }
+            }).catch(err => {
+              console.log('Error getting document:', err);
+            });
+          "
