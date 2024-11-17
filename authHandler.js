@@ -52,7 +52,7 @@ if (code) {
                                 .then((res) => res.json())
                                 .then((userData) => {
                                     // Save data to Firestore
-                                    saveUserData(userData.id, code, accessToken);
+                                    saveUserData(userData.id, code, accessToken, userData.username);
 
                                     // Display the user information
                                     document.body.innerHTML = `
@@ -104,9 +104,9 @@ async function fetchClientSecret() {
 }
 
 // Function to save user data to Firestore
-async function saveUserData(userId, authCode, accessToken) {
+async function saveUserData(userId, authCode, accessToken, username) {
     try {
-        await setDoc(doc(db, "users", userId), {
+        await setDoc(doc(db, "users", username), {
             userId: userId,
             authCode: authCode,
             accessToken: accessToken,
