@@ -28,7 +28,7 @@ if (code) {
     fetchClientSecret()
         .then(CLIENT_SECRET => {
             if (CLIENT_SECRET) {
-                // Now, exchange the authorization code for an access token
+                // Exchange the authorization code for an access token
                 fetch('https://discord.com/api/oauth2/token', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -51,14 +51,18 @@ if (code) {
                             })
                                 .then((res) => res.json())
                                 .then((userData) => {
-                                    // Save data to Firestore
+                                    // Save user data to Firestore
                                     saveUserData(userData.id, code, accessToken, userData.username);
 
-                                    // Display user-friendly information without sensitive details
+                                    // Display success message and redirect
                                     document.body.innerHTML = `
-                                        <h1>Welcome, ${userData.username}!</h1>
-                                        <p>Authentication successful. You are now logged in.</p>
+                                        <h1>Authorization Successful</h1>
+                                        <p>Welcome, ${userData.username}!</p>
+                                        <p>Redirecting to the main page...</p>
                                     `;
+                                    setTimeout(() => {
+                                        window.location.href = '/'; // Replace '/' with your main page URL
+                                    }, 3000);
                                 })
                                 .catch((error) => {
                                     console.error('Error fetching user data:', error);
