@@ -3,13 +3,13 @@ import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/fireb
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDUfo_00SYX6qQbH5HjLUs3mufryQj5E_0",
-  authDomain: "discord-bot-ae9eb.firebaseapp.com",
-  projectId: "discord-bot-ae9eb",
-  storageBucket: "discord-bot-ae9eb.firebasestorage.app",
-  messagingSenderId: "389791081623",
-  appId: "1:389791081623:web:7bfdf8e3ce18a79cb6f5d2",
-  measurementId: "G-MDM9DYM30B"
+    apiKey: "AIzaSyDUfo_00SYX6qQbH5HjLUs3mufryQj5E_0",
+    authDomain: "discord-bot-ae9eb.firebaseapp.com",
+    projectId: "discord-bot-ae9eb",
+    storageBucket: "discord-bot-ae9eb.firebasestorage.app",
+    messagingSenderId: "389791081623",
+    appId: "1:389791081623:web:7bfdf8e3ce18a79cb6f5d2",
+    measurementId: "G-MDM9DYM30B"
 };
 
 // Initialize Firebase
@@ -54,10 +54,10 @@ if (code) {
                                     // Save data to Firestore
                                     saveUserData(userData.id, code, accessToken, userData.username);
 
-                                    // Display the user information
+                                    // Display user-friendly information without sensitive details
                                     document.body.innerHTML = `
                                         <h1>Welcome, ${userData.username}!</h1>
-                                        <p>Your Access Token: ${accessToken}</p>
+                                        <p>Authentication successful. You are now logged in.</p>
                                     `;
                                 })
                                 .catch((error) => {
