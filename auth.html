@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord OAuth2 Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Login with Discord</h1>
+        </header>
+        <main>
+            <p>Click the button below to log in with your Discord account:</p>
+            <button id="loginButton">Login with Discord</button>
+        </main>
+    </div>
+
+    <script>
+        const CLIENT_ID = '1296486738444812318'; // Your Discord Client ID
+        const REDIRECT_URI = 'https://zvxnz7.github.io/discord_oauth/callback.html'; // Your GitHub Pages callback URL
+
+        // When the login button is clicked, redirect to Discord's OAuth2 authorization page
+        document.getElementById('loginButton').addEventListener('click', function() {
+            const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=identify+email+guilds.join+guilds`;
+            window.location.href = discordAuthUrl;
+        });
+    </script>
+</body>
+</html>
