@@ -3,6 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome to My Website</h1>
+        </header>
+        <main>
+            <p id="greeting">Loading your information...</p>
+            <p>If you're not logged in, <a href="auth.html">log in with Discord</a>.</p>
+        </main>
+    </div>
+
+    <script>
+        // Retrieve user data from sessionStorage
+        const userData = JSON.parse(sessionStorage.getItem('userData') || '{}');
+
+        // Display greeting if the user is logged in
+        if (userData.username) {
+            document.getElementById('greeting').innerText = `Hello, ${userData.username}!`;
+        } else {
+            document.getElementById('greeting').innerText = "You're not logged in.";
+        }
+    </script>
+</body>
+</html>
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discord OAuth2 Login</title>
 </head>
 <body>
@@ -69,3 +104,4 @@
     </script>
 </body>
 </html>
+ -->
